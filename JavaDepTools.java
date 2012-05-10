@@ -28,7 +28,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-public class Main {
+public class JavDepTools {
   private final CommandLine line;
   private final String[] args;
 
@@ -67,7 +67,7 @@ public class Main {
             "print version information and exit");
   }
 
-  public Main(String[] args) throws ParseException {
+  public JavDepTools(String[] args) throws ParseException {
     CommandLineParser parser = new GnuParser();
     line = parser.parse(options, args);
     this.args = line.getArgs();
@@ -75,7 +75,7 @@ public class Main {
 
   public static void main(String[] args) {
     try {
-      Main app = new Main(args);
+      JavDepTools app = new JavDepTools(args);
       app.run();
     } catch (Exception e) {
       System.err.println("Unhandled exception:");
