@@ -28,7 +28,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-public class JavDepTools {
+class JavDepTools {
   private final CommandLine line;
   private final String[] args;
 
