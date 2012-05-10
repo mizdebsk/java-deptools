@@ -67,23 +67,13 @@ class JavDepTools {
             "print version information and exit");
   }
 
-  public JavDepTools(String[] args) throws ParseException {
+  JavDepTools(String[] args) throws ParseException {
     CommandLineParser parser = new GnuParser();
     line = parser.parse(options, args);
     this.args = line.getArgs();
   }
 
-  public static void main(String[] args) {
-    try {
-      JavDepTools app = new JavDepTools(args);
-      app.run();
-    } catch (Exception e) {
-      System.err.println("Unhandled exception:");
-      e.printStackTrace();
-    }
-  }
-
-  private void run() throws Exception {
+  void run() throws Exception {
     if (line.hasOption("help")) {
       HelpFormatter formatter = new HelpFormatter();
       formatter.setArgName("pattern");
