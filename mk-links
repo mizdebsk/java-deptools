@@ -1,0 +1,55 @@
+#!/bin/sh
+#-
+# Copyright (c) 2012 Red Hat, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+### BEGIN OF CONFIGURATION ###
+
+# Where Fedora packages can be found on your host system.
+: ${repo:=/mnt/globalsync/fedora/linux/development/rawhide/x86_64/os/Packages}
+
+# Where to store symlinks to Java packages.
+: ${link_dir:=./java-rpms}
+
+# A command used to access your Fedora machine.
+# If its the localhost, use "sh -c".
+: ${shell:=ssh f16}
+
+### END OF CONFIGURATION ###
+
+
+set -e
+
+# Remove old symlinks.
+rm -Rf $link_dir
+mkdir $link_dir
+cd $link_dir
+
+# Query rawhide repo.
+echo Querying rawhide repository...
+pkgs=$($shell "repoquery --repoid rawhide --archlist x86_64,noarch --whatprovides '**.jar'")
+
+# Create new symlinks.
+echo Creating symlinks...
+for pkg in $(echo "$pkgs" | sort -u)
+do
+  first_letter=$(echo -n $pkg | perl -pes'/(.).*/lc$1/'e)
+  name_no_epoch=$(echo -n $pkg | perl -pes'/-[^-:]:/-/')
+  full_path=$repo/$first_letter/$name_no_epoch.rpm
+  ln -sf $full_path
+done
+
+echo Done.
+echo Now you can run \`java-deptools -b $link_dir\'
