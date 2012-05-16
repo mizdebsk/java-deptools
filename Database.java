@@ -231,7 +231,7 @@ class Database {
    * Write database to given output stream
    * 
    * @param os
-   *          the input stream to read database from
+   *          the output stream to write database to
    * @throws IOException
    * @throws FileNotFoundException
    * @throws UnsupportedOptionsException
