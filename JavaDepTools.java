@@ -128,22 +128,22 @@ class JavDepTools {
 
     if (line.hasOption("requires")) {
       db.query_requires(args);
-      System.exit(1);
+      return;
     }
 
     if (line.hasOption("provides")) {
       db.query_provides(args[0]);
-      System.exit(1);
+      return;
     }
 
     if (line.hasOption("what-provides")) {
       db.query_what_provides(args[0]);
-      System.exit(1);
+      return;
     }
     
     if (line.hasOption("list")) {
       db.list_packages();
-      System.exit(0);
+      return;
     }
 
     if (line.hasOption("why")) {
@@ -152,7 +152,7 @@ class JavDepTools {
         System.exit(1);
       }
       db.query_why(args[0], args[1]);
-      System.exit(1);
+      return;
     }
 
     assert false;

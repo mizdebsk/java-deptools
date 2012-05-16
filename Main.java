@@ -20,9 +20,11 @@ public class Main {
     try {
       JavDepTools app = new JavDepTools(args);
       app.run();
+      System.exit(0);
     } catch (Exception e) {
       System.err.println("Unhandled exception:");
       e.printStackTrace();
+      System.exit(1);
     }
   }
 }
