@@ -34,6 +34,8 @@ class JavDepTools {
 
   private static Options options = new Options();
   static {
+    options.addOption("z", "database", true,
+            "specify database file location (required)");
     options.addOption(
             "p",
             "provides",
@@ -107,20 +109,21 @@ class JavDepTools {
               .println("Invalid command line. Specify -h for help about usage.");
       System.exit(1);
     }
-
-    if (nExclusive != 1 || args.length == 0) {
+    
+    if (nExclusive != 1 || args.length == 0 || !line.hasOption("database")) {
       System.err
               .println("Missing argument. Specify -h for help about usage.");
       System.exit(1);
     }
+    
+    String db_path = line.getOptionValue("database");
 
     if (line.hasOption("build")) {
-      build();
+      build(db_path);
       return;
     }
 
-    Database db = new Database(new File(
-            "/home/kojan/proj/class-dump/tmp/packages.dep"));
+    Database db = new Database(new File(db_path));
 
     if (line.hasOption("requires")) {
       db.query_requires(args);
@@ -149,11 +152,8 @@ class JavDepTools {
     assert false;
   }
 
-  private void build() throws IOException {
+  private void build(String db_path) throws IOException {
     Database db = new Database(new File(args[0]), 0);
-    db.write(new FileOutputStream(
-            "/home/kojan/proj/class-dump/tmp/packages.dep"));
+    db.write(new FileOutputStream(db_path));
   }
 }
-
-// for each class: who is using it
