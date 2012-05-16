@@ -67,6 +67,7 @@ class JavDepTools {
     options.addOption("h", "help", false, "print help about usage and exit");
     options.addOption("V", "version", false,
             "print version information and exit");
+    options.addOption("list", false, "list all indexed packages");
   }
 
   JavDepTools(String[] args) throws ParseException {
@@ -138,6 +139,11 @@ class JavDepTools {
     if (line.hasOption("what-provides")) {
       db.query_what_provides(args[0]);
       System.exit(1);
+    }
+    
+    if (line.hasOption("list")) {
+      db.list_packages();
+      System.exit(0);
     }
 
     if (line.hasOption("why")) {

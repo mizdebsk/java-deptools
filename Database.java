@@ -420,4 +420,9 @@ class Database {
     }
     print_result(result);
   }
+
+  public void list_packages() {
+    for (String s : cntmap.keySet())
+      System.out.println(s);
+  }
 }
