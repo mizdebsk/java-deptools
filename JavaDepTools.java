@@ -99,6 +99,7 @@ class JavDepTools {
     exclusive_opts.add("what-provides");
     exclusive_opts.add("diff");
     exclusive_opts.add("why");
+    exclusive_opts.add("list");
 
     int nExclusive = 0;
     for (String opt : exclusive_opts)
@@ -110,13 +111,14 @@ class JavDepTools {
               .println("Invalid command line. Specify -h for help about usage.");
       System.exit(1);
     }
-    
-    if (nExclusive != 1 || args.length == 0 || !line.hasOption("database")) {
+
+    if (nExclusive != 1 || (args.length == 0 && !line.hasOption("list"))
+            || !line.hasOption("database")) {
       System.err
               .println("Missing argument. Specify -h for help about usage.");
       System.exit(1);
     }
-    
+
     String db_path = line.getOptionValue("database");
 
     if (line.hasOption("build")) {
@@ -140,7 +142,7 @@ class JavDepTools {
       db.query_what_provides(args[0]);
       return;
     }
-    
+
     if (line.hasOption("list")) {
       db.list_packages();
       return;
