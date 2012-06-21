@@ -156,12 +156,12 @@ class Database {
       e.printStackTrace();
     }
 
-    System.err.printf("┌──────────────────────────────┐%n");
-    System.err.printf("│ Total RPMs processed : %5d │%n", max);
-    System.err.printf("│ Java packages found  : %5d │%n", cntmap.size());
+    System.err.printf("\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510%n");
+    System.err.printf("\u2502 Total RPMs processed : %5d \u2502%n", max);
+    System.err.printf("\u2502 Java packages found  : %5d \u2502%n", cntmap.size());
     System.err
-            .printf("│ Skipped packages     : %5d │%n", max - cntmap.size());
-    System.err.printf("└──────────────────────────────┘%n");
+            .printf("\u2502 Skipped packages     : %5d \u2502%n", max - cntmap.size());
+    System.err.printf("\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518%n");
   }
 
   static void optimize_JRE(List<Set<String>> deps) {
