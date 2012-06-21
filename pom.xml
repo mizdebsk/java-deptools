@@ -15,10 +15,10 @@
  ! limitations under the License.
  `-->
 <project>
-  <name>javadeptools</name>
+  <name>java-deptools</name>
   <version>0</version>
   <groupId>org.fedoraproject.javadeptools</groupId>
-  <artifactId>javadeptools</artifactId>
+  <artifactId>java-deptools</artifactId>
   <modelVersion>4.0.0</modelVersion>
 
   <properties>
