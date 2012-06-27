@@ -413,7 +413,7 @@ class Database {
       Set<String> pres = new TreeSet<String>();
       for (String cn : cdeps) {
         Set<String> deps = revmap.get(cn);
-        if (deps.contains(dep_name))
+        if (deps != null && deps.contains(dep_name))
           pres.add(cn);
       }
       result.put(pn, pres);
