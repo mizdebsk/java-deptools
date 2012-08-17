@@ -133,6 +133,11 @@ class JavDepTools {
       return;
     }
 
+    if (line.hasOption("what-requires")) {
+      db.query_what_requires(args);
+      return;
+    }
+
     if (line.hasOption("provides")) {
       db.query_provides(args[0]);
       return;

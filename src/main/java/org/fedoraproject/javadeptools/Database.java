@@ -357,10 +357,8 @@ class Database {
     print_result(result);
   }
 
-  public void query_requires(String[] args) throws IOException,
-          InterruptedException {
-    Set<String> packages;
-    packages = new TreeSet<String>();
+  private Set<String> expand_package_names(String[] args) throws IOException, InterruptedException {
+    Set<String> packages = new TreeSet<String>();
     for (String fn : args) {
       if (fn.endsWith(".jar") || fn.endsWith(".rpm")) {
         File f = new File(fn);
@@ -375,12 +373,25 @@ class Database {
     }
     if (packages.isEmpty())
       System.exit(1);
+    return packages;
+  }
 
+  public void query_requires(String[] args) throws IOException,
+          InterruptedException {
+    Set<String> packages = expand_package_names(args);
     prepare();
     final Map<String, Set<String>> result = new TreeMap<String, Set<String>>();
     for (String pn : packages)
       result.put(pn, pkgdep.get(pn));
     print_result(result);
+  }
+
+  public void query_what_requires(String[] args) throws IOException, InterruptedException {
+    Set<String> packages = expand_package_names(args);
+    prepare();
+    for (String pn : cntmap.keySet())
+      if (pkgdep.get(pn).containsAll(packages))
+        System.out.println(pn);
   }
 
   public void query_why(String pattern, String dep_name) throws IOException,
