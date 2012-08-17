@@ -29,7 +29,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
 import org.apache.commons.compress.archivers.ArchiveEntry;
-import org.apache.commons.compress.archivers.cpio.CpioArchiveInputStream;
+import org.apache.commons.compress.archivers.ArchiveInputStream;
 
 class FedoraPackage {
   private final String name;
@@ -38,22 +38,16 @@ class FedoraPackage {
   private List<JavaClass> read_rpm(File rpm) throws IOException,
           InterruptedException {
 
-    Process p = Runtime.getRuntime().exec(
-            new String[] { "rpm2cpio", rpm + "" });
-    InputStream is = p.getInputStream();
-
-    CpioArchiveInputStream cpio_is = new CpioArchiveInputStream(is);
-    ArchiveEntry cpio_ent;
+    ArchiveInputStream rpm_is = new RpmArchiveInputStream(rpm);
+    ArchiveEntry rpm_ent;
 
     List<JavaClass> list = new ArrayList<JavaClass>();
-    while ((cpio_ent = cpio_is.getNextEntry()) != null) {
-      if (cpio_ent.isDirectory() || !cpio_ent.getName().endsWith(".jar"))
+    while ((rpm_ent = rpm_is.getNextEntry()) != null) {
+      if (rpm_ent.isDirectory() || !rpm_ent.getName().endsWith(".jar"))
         continue;
-      list.addAll(read_jar(cpio_is));
+      list.addAll(read_jar(rpm_is));
     }
-    cpio_is.close();
-    // If rpm2cpio hasn't terminated yet it should get SIGPIPE now.
-    p.waitFor();
+    rpm_is.close();
     return list;
   }
 
